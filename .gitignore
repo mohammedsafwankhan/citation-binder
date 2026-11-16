@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables and secrets (CRITICAL: Never commit secrets)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Unit test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs and temporary files
+*.log
+*.sqlite
+*.sqlite3
+
+# Local experiment sandbox
+experiment/
+
+# IDE / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

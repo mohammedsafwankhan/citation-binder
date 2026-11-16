@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citation Binder | Source Verification Engine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/style.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- Accessible Skip Link -->
+  <a href="#claim-input" class="sr-only focus:not-sr-only focus:absolute focus:p-3 focus:bg-white focus:text-brand-700 z-50 shadow-md">
+    Skip to verification form
+  </a>
+
+  <!-- Top Navigation Bar -->
+  <header class="border-b border-slate-200/80 bg-white/90 sticky top-0 z-30 backdrop-blur-md">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-700 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20 flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold tracking-tight text-slate-900 flex items-center gap-2">
+            Citation Binder
+            <span class="text-[10px] font-semibold uppercase tracking-wider bg-brand-50 text-brand-700 px-2 py-0.5 rounded-full border border-brand-200/60">Foundation</span>
+          </h1>
+          <p class="text-[11px] sm:text-xs text-slate-500">Source Evidence & Claim Corroboration Engine</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2 sm:space-x-3 text-xs">
+        <span class="inline-flex items-center px-2 py-1 rounded-md text-slate-700 bg-slate-100 border border-slate-200 font-mono text-[11px]" title="SSRF & Private IP Blacklist active">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse" aria-hidden="true"></span>
+          SSRF Guard
+        </span>
+        <a href="/report.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold border border-brand-200 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          PDF Report
+        </a>
+        <a href="/docs" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-block text-slate-500 hover:text-slate-800 transition font-medium">API Docs</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8">
+    
+    <!-- Hero Header -->
+    <div class="text-center max-w-2xl mx-auto space-y-2">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+        Verify Cited Claims Against Public Sources
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+        Submit a claim and public web URL or text PDF. Citation Binder safely retrieves the source, verifies authentic passages, and evaluates whether the evidence supports, partially supports, contradicts, or cannot verify the assertion.
+      </p>
+    </div>
+
+    <!-- Quick Presets Carousel / Grid -->
+    <div class="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs">
+      <div class="flex items-center justify-between mb-2.5">
+        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Quick Presets (1-Click Fill)
+        </span>
+        <span class="text-[11px] text-slate-400">Click to populate form</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+        <button type="button" class="preset-btn text-left p-2.5 rounded-xl border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50/40 transition group cursor-pointer" data-preset="supports">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-800 mb-0.5">
+            <span class="text-emerald-600 font-mono font-black">[✓]</span>
+            <span>Supports</span>
+          </div>
+          <div class="text-[11px] text-slate-600 line-clamp-2">James Webb Space Telescope launch date (Dec 25, 2021)</div>
+        </button>
+
+        <button type="button" class="preset-btn text-left p-2.5 rounded-xl border border-slate-200 hover:border-rose-400 hover:bg-rose-50/40 transition group cursor-pointer" data-preset="not_supports">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-rose-800 mb-0.5">
+            <span class="text-rose-600 font-mono font-black">[✕]</span>
+            <span>Does Not Support</span>
+          </div>
+          <div class="text-[11px] text-slate-600 line-clamp-2">Apollo 11 landed on the moon in 1999 (Refuted)</div>
+        </button>
+
+        <button type="button" class="preset-btn text-left p-2.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/40 transition group cursor-pointer" data-preset="partially_supports">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-amber-800 mb-0.5">
+            <span class="text-amber-600 font-mono font-black">[~]</span>
+            <span>Partially Supports</span>
+          </div>
+          <div class="text-[11px] text-slate-600 line-clamp-2">Python creator verified, but release year diverges</div>
+        </button>
+
+        <button type="button" class="preset-btn text-left p-2.5 rounded-xl border border-slate-200 hover:border-purple-400 hover:bg-purple-50/40 transition group cursor-pointer" data-preset="ssrf_blocked">
+          <div class="flex items-center gap-1.5 text-xs font-bold text-purple-800 mb-0.5">
+            <span class="text-purple-600 font-mono font-black">[!]</span>
+            <span>SSRF Security Block</span>
+          </div>
+          <div class="text-[11px] text-slate-600 line-clamp-2">Targeting AWS metadata endpoint (169.254.169.254)</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Verification Input Form -->
+    <div class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6 shadow-sm">
+      <form id="verify-form" class="space-y-4 sm:space-y-5" novalidate>
+        
+        <!-- Claim Input -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label for="claim-input" class="text-xs sm:text-sm font-semibold text-slate-900 flex items-center gap-1">
+              <span>Claim to Verify</span>
+              <span class="text-rose-500" aria-label="Required">*</span>
+            </label>
+            <span id="char-count" class="text-[11px] font-mono text-slate-400">0 / 1000</span>
+          </div>
+          <textarea
+            id="claim-input"
+            name="claim"
+            rows="3"
+            maxlength="1000"
+            required
+            aria-describedby="claim-help"
+            placeholder="e.g. The James Webb Space Telescope was launched into space on December 25, 2021."
+            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none text-xs sm:text-sm transition placeholder:text-slate-400 resize-none font-normal"
+          ></textarea>
+          <div id="claim-error" class="hidden text-xs text-rose-600 font-medium">Please enter a factual claim (at least 5 characters).</div>
+        </div>
+
+        <!-- URL Input -->
+        <div class="space-y-1.5">
+          <label for="url-input" class="text-xs sm:text-sm font-semibold text-slate-900 flex items-center gap-1">
+            <span>Public Source URL</span>
+            <span class="text-rose-500" aria-label="Required">*</span>
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400" aria-hidden="true">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+              </svg>
+            </div>
+            <input
+              type="url"
+              id="url-input"
+              name="url"
+              required
+              aria-describedby="url-help"
+              placeholder="https://en.wikipedia.org/wiki/James_Webb_Space_Telescope"
+              class="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none text-xs sm:text-sm transition placeholder:text-slate-400"
+            />
+          </div>
+          <div id="url-error" class="hidden text-xs text-rose-600 font-medium">Please enter a valid HTTP or HTTPS public URL.</div>
+          <p id="url-help" class="text-[11px] text-slate-500 flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            <span>Supports public web pages (HTML) and text PDFs. Localhost and private IP ranges are blocked.</span>
+          </p>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <button
+            type="submit"
+            id="submit-btn"
+            class="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white font-semibold text-xs sm:text-sm shadow-md shadow-brand-500/20 transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+            </svg>
+            <span>Audit Citation</span>
+          </button>
+
+          <span class="text-[11px] text-slate-400 text-center sm:text-right">
+            Untrusted source containment active
+          </span>
+        </div>
+      </form>
+    </div>
+
+    <!-- Live Progress Telemetry Card -->
+    <div id="progress-card" class="hidden bg-white rounded-2xl border border-brand-200 p-5 sm:p-6 shadow-sm space-y-4" role="status" aria-live="polite">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-600 animate-ping" aria-hidden="true"></span>
+          <span>Verification In Progress...</span>
+        </h3>
+        <span id="elapsed-timer" class="text-xs font-mono text-brand-700 font-bold">0.0s elapsed</span>
+      </div>
+
+      <!-- 4 Stages Progress -->
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 text-xs">
+        <div id="step-ssrf" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 transition flex items-center gap-2">
+          <span class="step-num w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-mono text-[10px] font-bold">1</span>
+          <span class="font-medium text-slate-700">SSRF & DNS Guard</span>
+        </div>
+        <div id="step-fetch" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 transition flex items-center gap-2">
+          <span class="step-num w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-mono text-[10px] font-bold">2</span>
+          <span class="font-medium text-slate-700">Safe Web Fetch</span>
+        </div>
+        <div id="step-parse" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 transition flex items-center gap-2">
+          <span class="step-num w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-mono text-[10px] font-bold">3</span>
+          <span class="font-medium text-slate-700">Passage Ranking</span>
+        </div>
+        <div id="step-assess" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 transition flex items-center gap-2">
+          <span class="step-num w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-mono text-[10px] font-bold">4</span>
+          <span class="font-medium text-slate-700">Claim Assessment</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Alert Card -->
+    <div id="error-card" class="hidden rounded-2xl border p-5 shadow-sm space-y-2 transition" role="alert">
+      <div class="flex items-center gap-2.5 font-bold text-sm">
+        <span id="error-icon" class="text-lg font-mono font-black" aria-hidden="true">[!]</span>
+        <span id="error-title">Verification Blocked</span>
+      </div>
+      <p id="error-message" class="text-xs font-mono leading-relaxed pl-6"></p>
+      <div id="error-setup-guide" class="hidden mt-3 p-3 bg-white/70 rounded-xl border text-xs space-y-2">
+        <span class="font-bold text-slate-800 block">Configuration Quick Setup:</span>
+        <code class="block font-mono text-[11px] bg-slate-100 p-2 rounded text-slate-800 overflow-x-auto">
+          GEMINI_API_KEY=your_key_here<br>
+          ALLOW_HEURISTIC_FALLBACK=true
+        </code>
+        <span class="text-slate-600 block text-[11px]">Set these in your server <code class="font-mono text-slate-800">.env</code> file, then restart Citation Binder.</span>
+      </div>
+    </div>
+
+    <!-- Verification Result Card (Dossier) -->
+    <div id="result-card" class="hidden space-y-6" role="region" aria-label="Verification Results">
+      
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-sm space-y-6">
+        
+        <!-- Header: Accessible Verdict Badge & Latency Telemetry -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+          <div class="space-y-1.5">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Audited Citation Verdict</span>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <!-- Non-color reliant Verdict Pill with distinctive symbol and category text -->
+              <div id="verdict-badge" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border-2 font-black text-sm tracking-wide uppercase shadow-xs">
+                <!-- Injected via JS -->
+              </div>
+              <span id="verdict-sublabel" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 border border-slate-200">
+                <!-- Descriptive textual status injected via JS -->
+              </span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 text-xs text-slate-600 font-mono bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 self-start sm:self-auto">
+            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>Retrieval: <strong id="retrieval-time" class="text-slate-900 font-bold">-- ms</strong></span>
+            <span class="text-slate-300">|</span>
+            <span>Total: <strong id="total-time" class="text-slate-900 font-bold">-- ms</strong></span>
+          </div>
+        </div>
+
+        <!-- Document Title -->
+        <div class="space-y-1">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Source Page Title</span>
+          <h3 id="document-title" class="text-sm sm:text-base font-bold text-slate-800 break-words">--</h3>
+        </div>
+
+        <!-- Explanation Section -->
+        <div class="space-y-1.5">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Assessment Rationale & Explanation</span>
+          <div id="explanation-container" class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <p id="explanation-text" class="text-xs sm:text-sm text-slate-800 leading-relaxed"></p>
+          </div>
+        </div>
+
+        <!-- Quoted Evidence Section -->
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Verbatim Quoted Evidence</span>
+              <span id="quote-count-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-200 text-slate-800">0</span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-mono hidden sm:inline">Ground-truth verified substring</span>
+          </div>
+
+          <div id="quotes-container" class="space-y-2">
+            <!-- Evidence items injected via JS -->
+          </div>
+        </div>
+
+        <!-- Provenance URLs (Original vs Final URL after Redirects) -->
+        <div class="pt-4 border-t border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+          <div class="space-y-1 p-3 bg-slate-50/60 rounded-xl border border-slate-200/60">
+            <span class="text-slate-500 uppercase text-[10px] tracking-wider block font-sans font-bold">Original Submitted Source Link</span>
+            <a id="source-link" href="#" target="_blank" rel="noopener noreferrer" class="text-brand-600 hover:text-brand-800 break-all block underline underline-offset-2">--</a>
+          </div>
+
+          <div class="space-y-1 p-3 bg-slate-50/60 rounded-xl border border-slate-200/60">
+            <div class="flex items-center justify-between gap-1">
+              <span class="text-slate-500 uppercase text-[10px] tracking-wider block font-sans font-bold">Final URL (Destination After Redirects)</span>
+              <span id="redirect-pill" class="hidden text-[10px] font-sans font-bold bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded border border-indigo-200 whitespace-nowrap">Redirected</span>
+            </div>
+            <a id="final-link" href="#" target="_blank" rel="noopener noreferrer" class="text-slate-800 hover:text-slate-950 break-all block underline underline-offset-2">--</a>
+          </div>
+        </div>
+
+        <!-- Footer Metadata Banner -->
+        <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 pt-1 font-mono">
+          <span>Retrieved: <span id="retrieval-timestamp" class="text-slate-700">--</span></span>
+          <div class="flex items-center gap-3">
+            <span>Passages Analyzed: <strong id="passages-count" class="text-slate-700">--</strong></span>
+            <span>Engine: <strong id="eval-provider" class="text-slate-700">--</strong></span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 bg-white py-5 text-center text-xs text-slate-400">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>Citation Binder &bull; Source Retrieval & Factual Claim Corroboration</div>
+      <div class="font-mono text-[11px]">Strict Untrusted Data Isolation &bull; Anti-SSRF Defense</div>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
