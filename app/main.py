@@ -221,6 +221,31 @@ if static_dir.exists():
             )
         raise HTTPException(status_code=404, detail="Report PDF not found")
 
+    @app.get("/presentation.pdf")
+    async def get_presentation_pdf():
+        """Serves the 16:9 widescreen presentation slide deck in PDF format."""
+        pdf_file = static_dir / "Citation_Binder_Presentation.pdf"
+        if pdf_file.exists():
+            return FileResponse(
+                str(pdf_file),
+                media_type="application/pdf",
+                filename="Citation_Binder_Presentation.pdf",
+                content_disposition_type="inline"
+            )
+        raise HTTPException(status_code=404, detail="Presentation PDF not found")
+
+    @app.get("/presentation.pptx")
+    async def get_presentation_pptx():
+        """Serves the PowerPoint slide deck in PPTX format."""
+        pptx_file = static_dir / "Citation_Binder_Presentation.pptx"
+        if pptx_file.exists():
+            return FileResponse(
+                str(pptx_file),
+                media_type="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                filename="Citation_Binder_Presentation.pptx"
+            )
+        raise HTTPException(status_code=404, detail="Presentation PPTX not found")
+
     @app.get("/")
     async def serve_index():
         index_file = static_dir / "index.html"

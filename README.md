@@ -19,6 +19,7 @@
 [**Quickstart**](#-quickstart) •
 [**API Reference**](#-api-reference) •
 [**Apart Research Report (PDF)**](Citation_Binder_Project_Report.pdf) •
+[**Presentation Deck (PDF)**](Citation_Binder_Presentation.pdf) •
 [**Contributing**](CONTRIBUTING.md)
 
 </div>
